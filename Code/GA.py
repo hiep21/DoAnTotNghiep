@@ -94,7 +94,7 @@ def generate_random_cities(n_cities):
     return distances, city_names, cities
 
 # Sử dụng hàm để tạo ma trận khoảng cách và tên các thành phố
-distances, city_names, cities = generate_random_cities(100)
+distances, city_names, cities = generate_random_cities(10)
 
 # Sử dụng ma trận khoảng cách để chạy thuật toán di truyền
 start_time = time.time()
