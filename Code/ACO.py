@@ -3,28 +3,37 @@ import matplotlib.pyplot as plt
 import time
 class AntColony:
     def __init__(self, distances, city_names, n_ants, n_best, n_iterations, decay, alpha=1, beta=1):
+        # distances: Mảng 2 chiều chứa khoảng cách giữa các thành phố
         self.distances = distances
+        
+        # city_names: Danh sách tên các thành phố tương ứng với chỉ số trong mảng distances
         self.city_names = city_names
+        
+        # pheromone: Khởi tạo mảng pheromone với mỗi giá trị ban đầu bằng 1 chia cho số lượng thành phố
         self.pheromone = np.ones(self.distances.shape) / len(distances)
+        
+        # all_inds: Dãy chỉ số từ 0 đến số lượng thành phố, dùng để truy cập vào các thành phố trong mảng
         self.all_inds = range(len(distances))
+        
+        # n_ants: Số lượng kiến sử dụng trong mô hình
         self.n_ants = n_ants
+        
+        # n_best: Số lượng đường đi tốt nhất để cập nhật pheromone
         self.n_best = n_best
+        
+        # n_iterations: Số lần lặp (thế hệ) thuật toán sẽ chạy
         self.n_iterations = n_iterations
+        
+        # decay: Tỷ lệ bay hơi pheromone sau mỗi lần lặp
         self.decay = decay
+        
+        # alpha: Hệ số ảnh hưởng của pheromone đến xác suất chọn lộ trình (tương quan với tầm quan trọng của pheromone)
         self.alpha = alpha
+        
+        # beta: Hệ số ảnh hưởng của heuristic (nghịch đảo khoảng cách) đến xác suất chọn lộ trình
         self.beta = beta
 
-    def run(self):
-        shortest_path = None
-        all_time_shortest_path = ("placeholder", np.inf)
-        for i in range(self.n_iterations):
-            all_paths = self.gen_all_paths()
-            self.spread_pheromone(all_paths, self.n_best, shortest_path=shortest_path)
-            shortest_path = min(all_paths, key=lambda x: x[1])
-            if shortest_path[1] < all_time_shortest_path[1]:
-                all_time_shortest_path = shortest_path
-            self.pheromone *= (1 - self.decay)
-        return all_time_shortest_path
+
 
     def spread_pheromone(self, all_paths, n_best, shortest_path):
         # Sắp xếp tất cả các đường đi dựa trên độ dài (khoảng cách) của chúng
@@ -118,6 +127,35 @@ class AntColony:
             # Chọn một điểm di chuyển dựa trên xác suất đã tính
             move = np.random.choice(self.all_inds, 1, p=norm_row)[0]
             return move
+        
+    def run(self):
+        # Khởi tạo biến để lưu đường đi ngắn nhất tạm thời trong mỗi lần lặp
+        shortest_path = None
+        
+        # Khởi tạo biến để lưu đường đi ngắn nhất qua tất cả các lần lặp
+        all_time_shortest_path = ("placeholder", np.inf)
+        
+        # Lặp qua số lần thực hiện thuật toán đã định trước (n_iterations)
+        for i in range(self.n_iterations):
+            # Sinh ra tất cả các đường đi có thể của các kiến
+            all_paths = self.gen_all_paths()
+            
+            # Phân bổ pheromone dựa trên các đường đi đã sinh ra, tập trung vào n_best đường đi
+            self.spread_pheromone(all_paths, self.n_best, shortest_path=shortest_path)
+            
+            # Tìm đường đi ngắn nhất trong lần lặp hiện tại
+            shortest_path = min(all_paths, key=lambda x: x[1])
+            
+            # Kiểm tra nếu đường đi ngắn nhất hiện tại ngắn hơn đường đi ngắn nhất qua các lần lặp
+            if shortest_path[1] < all_time_shortest_path[1]:
+                # Cập nhật đường đi ngắn nhất qua các lần lặp
+                all_time_shortest_path = shortest_path
+            
+            # Giảm pheromone trên tất cả các đường đi dựa trên tỷ lệ bay hơi đã định (decay)
+            self.pheromone *= (1 - self.decay)
+        
+        # Trả về đường đi ngắn nhất qua tất cả các lần lặp
+        return all_time_shortest_path
 
 
 # Hàm để tạo ngẫu nhiên ma trận khoảng cách và tên các thành phố
@@ -139,7 +177,7 @@ distances, city_names, cities = generate_random_cities(10)
 
 # Khởi tạo và chạy thuật toán kiến
 start_time = time.time()
-ant_colony = AntColony(distances, city_names, n_ants=30, n_best=1, n_iterations=20, decay=0.1, alpha=1, beta=5)
+ant_colony = AntColony(distances, city_names, n_ants=30, n_best=1, n_iterations=50, decay=0.1, alpha=1, beta=5)
 shortest_path = ant_colony.run()
 end_time = time.time()
 

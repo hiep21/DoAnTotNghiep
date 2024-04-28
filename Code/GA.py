@@ -11,7 +11,8 @@ class GeneticAlgorithm:
         self.mutation_rate = mutation_rate  # Tỷ lệ đột biến
         # Tạo ngẫu nhiên các cá thể trong quần thể ban đầu
         self.population = [np.random.permutation(len(distances)) for _ in range(n_population)]
-    
+        print( self.population)
+        
     def fitness(self, chromosome):
         # Hàm tính độ thích nghi của một cá thể (độ dài của đường đi)
         return sum([self.distances[chromosome[i], chromosome[i + 1]] for i in range(-1, len(chromosome) - 1)])
@@ -19,7 +20,7 @@ class GeneticAlgorithm:
     def select(self, population):
         # Tính toán fitness cho mỗi cá thể trong quần thể. Fitness càng thấp (tổng khoảng cách càng ngắn) càng tốt.
         fitnesses = np.array([self.fitness(chromosome) for chromosome in population])
-    
+       
         # Chuyển đổi fitness thành một giá trị mà ở đó cá thể có tổng khoảng cách ngắn nhất có giá trị fitness cao nhất
         fitnesses = np.max(fitnesses) - fitnesses
     
@@ -39,31 +40,52 @@ class GeneticAlgorithm:
 
     
     def crossover(self, parent1, parent2):
-        # Hàm lai ghép giữa hai cá thể để tạo ra các cá thể con mới
+        # Xác định kích thước của cá thể, giả sử độ dài của chuỗi gen của parent1 và parent2 là như nhau
         size = len(parent1)
+        
+        # Khởi tạo hai cá thể con với giá trị ban đầu là 0
         c1, c2 = np.zeros(size, dtype=int), np.zeros(size, dtype=int)
+        
+        # Chọn ngẫu nhiên hai điểm cắt trong chuỗi gen
         cut1, cut2 = sorted(random.sample(range(size), 2))
+        
+        # Trích xuất và sao chép phân đoạn giữa hai điểm cắt từ mỗi bậc cha mẹ sang con
         c1_in, c2_in = parent1[cut1:cut2], parent2[cut1:cut2]
         c1[cut1:cut2], c2[cut1:cut2] = c1_in, c2_in
+        print(parent1)
+        # Danh sách vị trí cần điền vào các phần còn lại của cá thể con
         fill_pos = list(range(cut1)) + list(range(cut2, size))
+    
+        # Điền vào các vị trí còn lại trong c1 bằng các gen từ parent2 chưa xuất hiện trong c1
         for i in fill_pos:
             for j in range(size):
                 if parent2[j] not in c1:
                     c1[i] = parent2[j]
                     break
+    
+        # Điền vào các vị trí còn lại trong c2 bằng các gen từ parent1 chưa xuất hiện trong c2
+        for i in fill_pos:
             for j in range(size):
                 if parent1[j] not in c2:
                     c2[i] = parent1[j]
                     break
+    
+        # Trả về danh sách gồm hai cá thể con đã lai tạo
         return [c1, c2]
+
     
     def mutate(self, chromosome):
-        # Hàm đột biến để tạo ra sự đa dạng trong quần thể
+        # Duyệt qua từng gen trong nhiễm sắc thể
         for i in range(len(chromosome)):
+            # Xác suất thực hiện đột biến cho từng gen dựa trên mutation_rate
             if random.random() < self.mutation_rate:
+                # Chọn ngẫu nhiên một vị trí j trong nhiễm sắc thể để hoán đổi vị trí gen
                 j = random.randint(0, len(chromosome) - 1)
+                # Hoán đổi gen tại vị trí i với gen tại vị trí j
                 chromosome[i], chromosome[j] = chromosome[j], chromosome[i]
+        # Trả về nhiễm sắc thể sau khi đã có thể xảy ra đột biến
         return chromosome
+
     
     def run(self):
         # Hàm chạy thuật toán di truyền qua các thế hệ
@@ -99,7 +121,7 @@ distances, city_names, cities = generate_random_cities(10)
 # Sử dụng ma trận khoảng cách để chạy thuật toán di truyền
 start_time = time.time()
 
-genetic_algorithm = GeneticAlgorithm(distances, n_population=10, n_generations=100, mutation_rate=0.01)
+genetic_algorithm = GeneticAlgorithm(distances, n_population=2, n_generations=1, mutation_rate=0.1)
 best_route = genetic_algorithm.run()
 end_time = time.time()
 print("Best route: ", best_route)
