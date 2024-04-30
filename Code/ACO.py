@@ -181,7 +181,8 @@ ant_colony = AntColony(distances, city_names, n_ants=30, n_best=1, n_iterations=
 shortest_path = ant_colony.run()
 end_time = time.time()
 
-print("Shortest path: ", shortest_path)
+print("Shortest path: ", shortest_path[0])
+print("Best distance: ", shortest_path[1])
 
 execution_time = end_time - start_time
 print(f"Execution time: {execution_time:.2f} seconds")

@@ -11,11 +11,12 @@ class GeneticAlgorithm:
         self.mutation_rate = mutation_rate  # Tỷ lệ đột biến
         # Tạo ngẫu nhiên các cá thể trong quần thể ban đầu
         self.population = [np.random.permutation(len(distances)) for _ in range(n_population)]
-        print( self.population)
+        # print( self.population)
         
     def fitness(self, chromosome):
         # Hàm tính độ thích nghi của một cá thể (độ dài của đường đi)
-        return sum([self.distances[chromosome[i], chromosome[i + 1]] for i in range(-1, len(chromosome) - 1)])
+        return sum([self.distances[chromosome[i], chromosome[i + 1]] for i in range(len(chromosome) - 1)]) + self.distances[chromosome[-1], chromosome[0]]
+
     
     def select(self, population):
         # Tính toán fitness cho mỗi cá thể trong quần thể. Fitness càng thấp (tổng khoảng cách càng ngắn) càng tốt.
@@ -52,7 +53,7 @@ class GeneticAlgorithm:
         # Trích xuất và sao chép phân đoạn giữa hai điểm cắt từ mỗi bậc cha mẹ sang con
         c1_in, c2_in = parent1[cut1:cut2], parent2[cut1:cut2]
         c1[cut1:cut2], c2[cut1:cut2] = c1_in, c2_in
-        print(parent1)
+        #print(parent1)
         # Danh sách vị trí cần điền vào các phần còn lại của cá thể con
         fill_pos = list(range(cut1)) + list(range(cut2, size))
     
@@ -116,12 +117,12 @@ def generate_random_cities(n_cities):
     return distances, city_names, cities
 
 # Sử dụng hàm để tạo ma trận khoảng cách và tên các thành phố
-distances, city_names, cities = generate_random_cities(10)
+distances, city_names, cities = generate_random_cities(20)
 
 # Sử dụng ma trận khoảng cách để chạy thuật toán di truyền
 start_time = time.time()
 
-genetic_algorithm = GeneticAlgorithm(distances, n_population=2, n_generations=1, mutation_rate=0.1)
+genetic_algorithm = GeneticAlgorithm(distances, n_population=30, n_generations = 50, mutation_rate = 0.1)
 best_route = genetic_algorithm.run()
 end_time = time.time()
 print("Best route: ", best_route)
@@ -138,7 +139,7 @@ plt.title('Randomly Generated Cities')
 plt.xlabel('X Coordinate')
 plt.ylabel('Y Coordinate')
 
-# Vẽ đường đi tốt nhất
+# Vẽ đường đi tốt 
 route_coords = cities[best_route]
 route_coords = np.append(route_coords, [route_coords[0]], axis=0)
 plt.plot(route_coords[:,0], route_coords[:,1], linestyle='-', marker='o', markersize=5, color='red')
