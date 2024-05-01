@@ -1,0 +1,43 @@
+\contentsline {section}{\numberline {1}Phần 1: Tổng quan về đề tài}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Giới thiệu}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Lý do chọn đề tài}{3}{}%
+\contentsline {subsection}{\numberline {1.3}Phạm vi nghiên cứu}{4}{}%
+\contentsline {section}{\numberline {2}Phần 2: Thuật toán di truyền (GA) và thuật toán tối ưu hóa đàn kiến (ACO)}{5}{}%
+\contentsline {subsection}{\numberline {2.1}Thuật toán di truyền (GA)}{5}{}%
+\contentsline {subsubsection}{\numberline {2.1.1}Các thành phần cơ bản của GA}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.2}Các tính chất của GA}{8}{}%
+\contentsline {subsubsection}{\numberline {2.1.3}Độ phức tạp}{8}{}%
+\contentsline {subsubsection}{\numberline {2.1.4}Bài toán điển hình}{8}{}%
+\contentsline {subsubsection}{\numberline {2.1.5}Các biến thể của GA}{11}{}%
+\contentsline {subsection}{\numberline {2.2}Thuật toán tối ưu hóa đàn kiến (ACO)}{19}{}%
+\contentsline {subsubsection}{\numberline {2.2.1}Các thành phần chính của ACO}{20}{}%
+\contentsline {subsubsection}{\numberline {2.2.2}Các tính chất của ACO}{22}{}%
+\contentsline {subsubsection}{\numberline {2.2.3}Độ phức tạp}{22}{}%
+\contentsline {subsubsection}{\numberline {2.2.4}Bài toán điển hình}{23}{}%
+\contentsline {paragraph}{Khởi tạo các giá trị :}{24}{}%
+\contentsline {paragraph}{Công thức tính xác suất:}{24}{}%
+\contentsline {paragraph}{Xác suất từ A đến B (P$\_{A,B}$):}{24}{}%
+\contentsline {paragraph}{Xác suất từ A đến C (P$\_{A,C}$):}{24}{}%
+\contentsline {paragraph}{=>}{24}{}%
+\contentsline {subsubsection}{\numberline {2.2.5}Các biến thể của ACO}{25}{}%
+\contentsline {section}{\numberline {3}Phần 3: Ứng dụng GA và ACO vào bài toán người bán hàng (Travelling Salesman Problem - TSP)}{27}{}%
+\contentsline {subsection}{\numberline {3.1}Ý tưởng thực hiện}{27}{}%
+\contentsline {subsubsection}{\numberline {3.1.1}Thuật toán Di truyền (Genetic Algorithms - GA)}{27}{}%
+\contentsline {subsubsection}{\numberline {3.1.2} Thuật toán tối ưu hóa đàn kiến (Ant Colony Optimization - ACO)}{27}{}%
+\contentsline {subsection}{\numberline {3.2}Thực nghiệm}{27}{}%
+\contentsline {subsubsection}{\numberline {3.2.1}Thuật toán Di truyền (Genetic Algorithms - GA)}{28}{}%
+\contentsline {subsubsection}{\numberline {3.2.2}Thuật toán tối ưu hóa đàn kiến (Ant Colony Optimization - ACO)}{33}{}%
+\contentsline {subsection}{\numberline {3.3}Kết quả}{44}{}%
+\contentsline {section}{\numberline {4} Kết luận, đánh giá và nhận xét}{45}{}%
+\contentsline {subsection}{\numberline {4.1}Nhận xét}{45}{}%
+\contentsline {subsection}{\numberline {4.2}Đánh giá hiệu quả}{46}{}%
+\contentsline {paragraph}{Thuật toán Di truyền (GA)}{46}{}%
+\contentsline {paragraph}{Thuật toán kiến (ACO)}{46}{}%
+\contentsline {subsection}{\numberline {4.3}Độ phức tạp và thời gian thực thi}{46}{}%
+\contentsline {paragraph}{GA:}{46}{}%
+\contentsline {paragraph}{ACO:}{46}{}%
+\contentsline {subsection}{\numberline {4.4}Tính năng động và khả năng thích ứng}{46}{}%
+\contentsline {paragraph}{GA:}{46}{}%
+\contentsline {paragraph}{ACO:}{46}{}%
+\contentsline {subsection}{\numberline {4.5}Tính ổn định}{46}{}%
+\contentsline {section}{\numberline {5}Tài liệu tham khảo}{47}{}%

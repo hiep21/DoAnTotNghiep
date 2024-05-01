@@ -1,8 +1,0 @@
-Chọn Thuật toán Tối ưu Hóa Kiến (ACO) hoặc Thuật toán Di truyền (GA) làm đề tài nghiên cứu có thể đáp ứng nhiều mục đích quan trọng:
-
-Khám phá Tiềm năng Ứng dụng,
-Cải tiến Thuật toán,
-Đóng góp cho Khoa học Cơ bản và Ứng dụng,
-Đào tạo Kỹ năng,
-Giao lưu Học thuật và Hợp tác,
-Tạo Tiền đề cho Sản phẩm Công nghệ Mới,
