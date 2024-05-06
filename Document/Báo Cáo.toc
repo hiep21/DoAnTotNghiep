@@ -4,14 +4,14 @@
 \contentsline {subsection}{\numberline {1.3}Phạm vi nghiên cứu}{4}{}%
 \contentsline {section}{\numberline {2}Phần 2: Thuật toán di truyền (GA) và thuật toán tối ưu hóa đàn kiến (ACO)}{5}{}%
 \contentsline {subsection}{\numberline {2.1}Thuật toán di truyền (GA)}{5}{}%
-\contentsline {subsubsection}{\numberline {2.1.1}Các thành phần cơ bản của GA}{6}{}%
-\contentsline {subsubsection}{\numberline {2.1.2}Các tính chất của GA}{8}{}%
+\contentsline {subsubsection}{\numberline {2.1.1}Các thành phần chính của GA}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.2}Tiêu chí đánh giá của GA}{8}{}%
 \contentsline {subsubsection}{\numberline {2.1.3}Độ phức tạp}{8}{}%
 \contentsline {subsubsection}{\numberline {2.1.4}Bài toán điển hình}{8}{}%
 \contentsline {subsubsection}{\numberline {2.1.5}Các biến thể của GA}{11}{}%
 \contentsline {subsection}{\numberline {2.2}Thuật toán tối ưu hóa đàn kiến (ACO)}{19}{}%
 \contentsline {subsubsection}{\numberline {2.2.1}Các thành phần chính của ACO}{20}{}%
-\contentsline {subsubsection}{\numberline {2.2.2}Các tính chất của ACO}{22}{}%
+\contentsline {subsubsection}{\numberline {2.2.2}Tiêu chí đánh giá của ACO}{22}{}%
 \contentsline {subsubsection}{\numberline {2.2.3}Độ phức tạp}{22}{}%
 \contentsline {subsubsection}{\numberline {2.2.4}Bài toán điển hình}{23}{}%
 \contentsline {paragraph}{Khởi tạo các giá trị :}{24}{}%

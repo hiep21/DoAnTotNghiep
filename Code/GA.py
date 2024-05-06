@@ -117,13 +117,18 @@ def generate_random_cities(n_cities):
     return distances, city_names, cities
 
 # Sử dụng hàm để tạo ma trận khoảng cách và tên các thành phố
-distances, city_names, cities = generate_random_cities(20)
+distances, city_names, cities = generate_random_cities(10)
 
 # Sử dụng ma trận khoảng cách để chạy thuật toán di truyền
 start_time = time.time()
+population_best_route = []
 
-genetic_algorithm = GeneticAlgorithm(distances, n_population=30, n_generations = 50, mutation_rate = 0.1)
-best_route = genetic_algorithm.run()
+for i in range(5):
+    genetic_algorithm = GeneticAlgorithm(distances, n_population=200, n_generations = 100, mutation_rate = 0.1)
+    population_best_route.append( genetic_algorithm.run())
+
+best_route =min(population_best_route,key = genetic_algorithm.fitness)
+
 end_time = time.time()
 print("Best route: ", best_route)
 print("Best distance: ", genetic_algorithm.fitness(best_route))

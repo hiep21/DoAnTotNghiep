@@ -1,188 +1,69 @@
-# Mahdi Hassanzadeh
-
+import numpy as np
 import random
-import math
 import matplotlib.pyplot as plt
+import time
+class GeneticAlgorithm:
+    def __init__(self, distances, n_population=10, n_generations=100, mutation_rate=0.01):
+        self.distances = distances
+        self.n_population = n_population
+        self.n_generations = n_generations
+        self.mutation_rate = mutation_rate
+        self.population = [np.random.permutation(len(distances)) for _ in range(n_population)]
 
+    def fitness(self, chromosome):
+        return sum(self.distances[chromosome[i], chromosome[(i + 1) % len(chromosome)]] for i in range(len(chromosome)))
 
-# get cities info
-def getCity():
-    cities = []
-    f = open("TSP51.txt")
-    for i in f.readlines():
-        node_city_val = i.split()
-        cities.append(
-            [node_city_val[0], float(node_city_val[1]), float(node_city_val[2])]
-        )
+    def select(self, population, tournament_size=3):
+        tournament = random.sample(population, tournament_size)
+        best_individual = min(tournament, key=self.fitness)
+        return best_individual
 
-    return cities
+    def select(self, population, tournament_size=2):
+        population2 = sorted(population, key=self.fitness)
+        tournament = population2[:tournament_size]
+        # print(tournament)
+        best_individual = min(tournament, key=self.fitness)
+        return best_individual
 
+    def crossover(self, parent1, parent2):
+        size = len(parent1)
+        idx1, idx2 = sorted(random.sample(range(size), 2))
+        new_child = parent1[idx1:idx2]
+        new_child = np.concatenate((new_child, [city for city in parent2 if city not in new_child]))
+        return new_child
 
-# calculating distance of the cities
-def calcDistance(cities):
-    total_sum = 0
-    for i in range(len(cities) - 1):
-        cityA = cities[i]
-        cityB = cities[i + 1]
+    def mutate(self, chromosome):
+        idx1, idx2 = random.sample(range(len(chromosome)), 2)
+        chromosome[idx1], chromosome[idx2] = chromosome[idx2], chromosome[idx1]
+        return chromosome
 
-        d = math.sqrt(
-            math.pow(cityB[1] - cityA[1], 2) + math.pow(cityB[2] - cityA[2], 2)
-        )
+    def run(self):
+        for _ in range(self.n_generations):
+            new_population = []
+            for _ in range(len(self.population)):
+                parent1, parent2 = self.select(self.population), self.select(self.population)
+                child = self.crossover(parent1, parent2)
+                child = self.mutate(child)
+                new_population.append(child)
+            self.population = sorted(new_population, key=self.fitness)
+        return min(self.population, key=self.fitness)
 
-        total_sum += d
+def generate_random_cities(n_cities):
+    np.random.seed(0)  # Để kết quả có thể lặp lại
+    cities = np.random.rand(n_cities, 2) * 100  # Tạo ngẫu nhiên tọa độ cho các thành phố trong một phạm vi 0-100
+    distances = np.zeros((n_cities, n_cities))  # Khởi tạo ma trận khoảng cách
+    city_names = [f"City {i}" for i in range(n_cities)]  # Tạo tên các thành phố
 
-    cityA = cities[0]
-    cityB = cities[-1]
-    d = math.sqrt(math.pow(cityB[1] - cityA[1], 2) + math.pow(cityB[2] - cityA[2], 2))
+    # Tính toán và làm tròn khoảng cách giữa các thành phố
+    for i in range(n_cities):
+        for j in range(n_cities):
+            distance = np.linalg.norm(cities[i] - cities[j])
+            distances[i][j] = np.round(distance)
 
-    total_sum += d
+    return distances, city_names, cities
+distances, city_names, cities = generate_random_cities(100)
 
-    return total_sum
-
-
-# selecting the population
-def selectPopulation(cities, size):
-    population = []
-
-    for i in range(size):
-        c = cities.copy()
-        random.shuffle(c)
-        distance = calcDistance(c)
-        population.append([distance, c])
-    fitest = sorted(population)[0]
-
-    return population, fitest
-
-
-# the genetic algorithm
-def geneticAlgorithm(
-    population,
-    lenCities,
-    TOURNAMENT_SELECTION_SIZE,
-    MUTATION_RATE,
-    CROSSOVER_RATE,
-    TARGET,
-):
-    gen_number = 0
-    for i in range(200):
-        new_population = []
-
-        # selecting two of the best options we have (elitism)
-        new_population.append(sorted(population)[0])
-        new_population.append(sorted(population)[1])
-
-        for i in range(int((len(population) - 2) / 2)):
-            # CROSSOVER
-            random_number = random.random()
-            if random_number < CROSSOVER_RATE:
-                parent_chromosome1 = sorted(
-                    random.choices(population, k=TOURNAMENT_SELECTION_SIZE)
-                )[0]
-
-                parent_chromosome2 = sorted(
-                    random.choices(population, k=TOURNAMENT_SELECTION_SIZE)
-                )[0]
-
-                point = random.randint(0, lenCities - 1)
-
-                child_chromosome1 = parent_chromosome1[1][0:point]
-                for j in parent_chromosome2[1]:
-                    if (j in child_chromosome1) == False:
-                        child_chromosome1.append(j)
-
-                child_chromosome2 = parent_chromosome2[1][0:point]
-                for j in parent_chromosome1[1]:
-                    if (j in child_chromosome2) == False:
-                        child_chromosome2.append(j)
-
-            # If crossover not happen
-            else:
-                child_chromosome1 = random.choices(population)[0][1]
-                child_chromosome2 = random.choices(population)[0][1]
-
-            # MUTATION
-            if random.random() < MUTATION_RATE:
-                point1 = random.randint(0, lenCities - 1)
-                point2 = random.randint(0, lenCities - 1)
-                child_chromosome1[point1], child_chromosome1[point2] = (
-                    child_chromosome1[point2],
-                    child_chromosome1[point1],
-                )
-
-                point1 = random.randint(0, lenCities - 1)
-                point2 = random.randint(0, lenCities - 1)
-                child_chromosome2[point1], child_chromosome2[point2] = (
-                    child_chromosome2[point2],
-                    child_chromosome2[point1],
-                )
-
-            new_population.append([calcDistance(child_chromosome1), child_chromosome1])
-            new_population.append([calcDistance(child_chromosome2), child_chromosome2])
-
-        population = new_population
-
-        gen_number += 1
-
-        if gen_number % 10 == 0:
-            print(gen_number, sorted(population)[0][0])
-
-        if sorted(population)[0][0] < TARGET:
-            break
-
-    answer = sorted(population)[0]
-
-    return answer, gen_number
-
-
-# draw cities and answer map
-def drawMap(city, answer):
-    for j in city:
-        plt.plot(j[1], j[2], "ro")
-        plt.annotate(j[0], (j[1], j[2]))
-
-    for i in range(len(answer[1])):
-        try:
-            first = answer[1][i]
-            secend = answer[1][i + 1]
-
-            plt.plot([first[1], secend[1]], [first[2], secend[2]], "gray")
-        except:
-            continue
-
-    first = answer[1][0]
-    secend = answer[1][-1]
-    plt.plot([first[1], secend[1]], [first[2], secend[2]], "gray")
-
-    plt.show()
-
-
-def main():
-    # initial values
-    POPULATION_SIZE = 2000
-    TOURNAMENT_SELECTION_SIZE = 4
-    MUTATION_RATE = 0.1
-    CROSSOVER_RATE = 0.9
-    TARGET = 450.0
-
-    cities = getCity()
-    firstPopulation, firstFitest = selectPopulation(cities, POPULATION_SIZE)
-    answer, genNumber = geneticAlgorithm(
-        firstPopulation,
-        len(cities),
-        TOURNAMENT_SELECTION_SIZE,
-        MUTATION_RATE,
-        CROSSOVER_RATE,
-        TARGET,
-    )
-
-    print("\n----------------------------------------------------------------")
-    print("Generation: " + str(genNumber))
-    print("Fittest chromosome distance before training: " + str(firstFitest[0]))
-    print("Fittest chromosome distance after training: " + str(answer[0]))
-    print("Target distance: " + str(TARGET))
-    print("----------------------------------------------------------------\n")
-
-    drawMap(cities, answer)
-
-
-main()
+genetic_algorithm = GeneticAlgorithm(distances, n_population=100, n_generations = 50, mutation_rate = 0.1)
+best_route = genetic_algorithm.run()
+print("Best route: ", best_route)
+print("Best distance: ", genetic_algorithm.fitness(best_route))

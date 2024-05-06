@@ -101,7 +101,7 @@
 		\label{fig:mylabel}
 	\end{figure}
 
-	\subsubsection{Các thành phần cơ bản của GA}
+	\subsubsection{Các thành phần chính của GA}
 	\begin{enumerate}
 		\item \textbf{Mã hóa (Encoding)}
 		\begin{itemize}
@@ -149,7 +149,7 @@
 		\label{fig:mylabel}
 	\end{figure}
 	\newpage
-	\subsubsection{Các tính chất của GA}
+	\subsubsection{Tiêu chí đánh giá của GA}
 	\begin{itemize}
 		\item \textbf{Tính chính xác (Accuracy):} GA là thuật toán tìm kiếm xác suất, không đảm bảo tìm thấy giải pháp tối ưu toàn cục nhưng có khả năng tìm giải pháp tối ưu cục bộ hoặc gần với tối ưu toàn cục. Độ chính xác phụ thuộc vào hàm thích nghi, thiết kế nhiễm sắc thể, và các toán tử di truyền.
 		\item \textbf{Tính khách quan (Objectivity):} GA hoạt động dựa trên chọn lọc tự nhiên, không bị ảnh hưởng bởi sự thiên vị cá nhân hay yếu tố ngoại cảnh, đảm bảo tính công bằng trong quá trình tuyển chọn.
@@ -176,8 +176,9 @@
 	Độ phức tạp về không gian phụ thuộc vào kích thước quần thể và biểu diễn của nhiễm sắc thể, thường biểu thị qua \(O(N \times s)\), với \(s\) là không gian lưu trữ cần thiết cho mỗi cá thể.
 	\subsubsection{Bài toán điển hình}
 	\textbf{Bài toán Đoán Mật Khẩu (Password Guessing Problem):} Trong bài toán này, mục tiêu là tìm ra một chuỗi ký tự bằng cách 'đoán' liên tục. GA sử dụng các toán tử di truyền như lai ghép và đột biến để tạo ra các thế hệ mới của các chuỗi ký tự, tiến tới mật khẩu đúng. Đây là minh họa hiệu quả của cách mà GA tối ưu hóa và tiến hóa dần tới giải pháp qua nhiều thế hệ.
-	\textbf{Ví dụ minh họa: Bài toán Tìm mật khẩu}
+	
 	\begin{flushleft}
+		\textbf{Ví dụ minh họa: }
 		Xét bài toán Tìm mật khẩu với các yêu cầu sau:
 		\begin{itemize}
 			\item Mật khẩu gồm 8 kí tự, bao gồm chữ cái, chữ số và khoảng trắng. Ví dụ mật khẩu: \texttt{hoilamgi}.
@@ -225,6 +226,7 @@
 	\end{center}
 	\newpage
 	\subsubsection{Các biến thể của GA}
+	\newpage
 	\begin{enumerate}
 		\item \textbf{Steady-State Genetic Algorithm (SSGA):}
 		\begin{itemize}
@@ -402,7 +404,7 @@
 		\label{fig:mylabel}
 	\end{figure}	
 	\newpage
-	\subsubsection{Các tính chất của ACO}
+	\subsubsection{Tiêu chí đánh giá của ACO}
 	
 	\begin{itemize}
 		\item \textbf{Tính chính xác (Accuracy):} ACO đạt được tính chính xác thông qua việc cập nhật đường đi tốt nhất dựa trên lượng pheromone mà các "kiến" để lại trên đường đi của chúng. Khi nhiều kiến lựa chọn một đường đi và để lại pheromone, đường đi đó trở nên hấp dẫn hơn, dẫn đến khả năng cao mà đường đó là lối đi tối ưu hoặc gần tối ưu. Tuy nhiên, ACO không đảm bảo tìm được giải pháp tối ưu toàn cục 100% trong mọi trường hợp, nhưng nó thường tìm được giải pháp rất tốt trong thực tế.
